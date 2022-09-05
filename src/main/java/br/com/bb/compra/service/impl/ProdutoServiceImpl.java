@@ -37,6 +37,17 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     @Transactional
+    public ProdutoEntity deletar(Long id) {
+        final ProdutoEntity produtoApagado = repository.findById(id);
+        if (produtoApagado.getId() == null) {
+            throw new RuntimeException();
+        }
+        repository.deleteById(id);
+        return null;
+    }
+
+    @Override
+    @Transactional
     public List<Produto> salvarLista(List<Produto> novoProduto) {
         final List<ProdutoEntity> produtoEntityList = ProdutoConverter.convertProductTo(novoProduto);
         repository.persist(produtoEntityList);
